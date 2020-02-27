@@ -116,7 +116,9 @@ healthcheck(callback) {
       */
       log.error(this.id + " returned an Error: " + error);
       this.emitOffline();
-      callback(result, error);
+      if(callback) {
+          callback(result, error);
+      }
    } else {
      /**
       * Write this block.
@@ -130,7 +132,9 @@ healthcheck(callback) {
       */
       log.debug(this.id + " has started");
       this.emitOnline();
-      callback(result, error);
+      if(callback) {
+          callback(result, error);
+      }
    }
  });
 }
