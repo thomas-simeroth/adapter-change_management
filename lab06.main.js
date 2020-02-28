@@ -192,18 +192,7 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
-     this.connector.get((data, error) => { 
-        if(error) {
-             callback(data, error);
-        } else if(data.body) {
-            const object = JSON.parse(data.body);
-            const transformedData = object.result.map(record => this.transformRecord(record));
-            callback(transformedData, error);
-        } else {
-          console.error('No body returned');
-          callback(data, 'No body returned');
-        }
-     });
+     this.connector.get(callback);
   }
 
   /**
@@ -222,30 +211,7 @@ healthcheck(callback) {
      * Note how the object was instantiated in the constructor().
      * post() takes a callback function.
      */
-     this.connector.post((data, error) => {
-         if(error) {
-             callback(data, error)
-         } else if(data.body) {
-             const record = JSON.parse(data.body);
-             callback(this.transformRecord(record), error);
-         } else {
-             console.error('No body returned');
-             callback(data, 'No body returned');
-         }
-     });
-  }
-
-  transformRecord(record) {
-      const transformedRecord = {
-          change_ticket_number: record.number,
-          active: record.active,
-          priority: record.priority,
-          description: record.description,
-          work_start: record.work_start,
-          work_end: record.work_end,
-          change_ticket_key: record.sys_id
-      };
-      return transformedRecord;
+     this.connector.post(callback);
   }
 }
 
