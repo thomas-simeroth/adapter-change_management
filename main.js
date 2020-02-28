@@ -227,7 +227,8 @@ healthcheck(callback) {
              callback(data, error)
          } else if(data.body) {
              const record = JSON.parse(data.body);
-             callback(this.transformRecord(record), error);
+             const transformedRecord = this.transformRecord(record.result);
+             callback(transformedRecord, error);
          } else {
              console.error('No body returned');
              callback(data, 'No body returned');
